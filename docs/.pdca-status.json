@@ -1,0 +1,318 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-04-01T06:16:37.595Z",
+  "activeFeatures": [
+    "ad-banner-management",
+    "vo",
+    "mapper",
+    "service",
+    "interceptor",
+    "controller",
+    "admin"
+  ],
+  "primaryFeature": "ad-banner-management",
+  "features": {
+    "ad-banner-management": {
+      "phase": "do",
+      "startedAt": "2026-04-01T01:00:00.000Z",
+      "lastUpdated": "2026-04-01T03:00:00.000Z",
+      "documents": {
+        "plan": "docs/01-plan/features/ad-banner-management.plan.md",
+        "design": "docs/02-design/features/ad-banner-management.design.md"
+      }
+    },
+    "vo": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-01T02:39:41.563Z",
+        "lastUpdated": "2026-04-01T05:11:08.849Z"
+      },
+      "lastFile": "c:\\projects\\wontherads\\src\\main\\java\\com\\wontherads\\vo\\AdPlacementVO.java"
+    },
+    "mapper": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-01T02:40:20.771Z",
+        "lastUpdated": "2026-04-01T05:22:32.255Z"
+      },
+      "lastFile": "c:\\projects\\wontherads\\src\\main\\java\\com\\wontherads\\mapper\\AdMediaMapper.java"
+    },
+    "service": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-01T02:41:07.782Z",
+        "lastUpdated": "2026-04-01T06:16:37.595Z"
+      },
+      "lastFile": "c:\\projects\\wontherads\\src\\main\\java\\com\\wontherads\\service\\AdBannerServiceImpl.java"
+    },
+    "interceptor": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-01T02:41:40.646Z",
+        "lastUpdated": "2026-04-01T02:41:40.646Z"
+      },
+      "lastFile": "c:\\projects\\wontherads\\src\\main\\java\\com\\wontherads\\admin\\interceptor\\AdminAuthInterceptor.java"
+    },
+    "controller": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-01T02:41:47.571Z",
+        "lastUpdated": "2026-04-01T05:40:39.686Z"
+      },
+      "lastFile": "c:\\projects\\wontherads\\src\\main\\java\\com\\wontherads\\controller\\AdBannerController.java"
+    },
+    "admin": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-01T02:44:43.402Z",
+        "lastUpdated": "2026-04-01T02:44:43.402Z"
+      },
+      "lastFile": "c:\\projects\\wontherads\\src\\main\\webapp\\js\\admin\\banner.js"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-04-01T00:37:50.858Z",
+    "onboardingCompleted": true,
+    "lastActivity": "2026-04-01T06:16:37.595Z"
+  },
+  "history": [
+    {
+      "action": "plan_created",
+      "feature": "ad-banner-management",
+      "timestamp": "2026-04-01T01:00:00.000Z"
+    },
+    {
+      "timestamp": "2026-04-01T02:39:41.563Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:39:44.798Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:39:47.357Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:39:51.390Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:40:03.843Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:40:20.771Z",
+      "feature": "mapper",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:40:23.180Z",
+      "feature": "mapper",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:40:26.377Z",
+      "feature": "mapper",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:07.782Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:09.759Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:11.331Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:14.042Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:16.688Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:28.862Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:40.646Z",
+      "feature": "interceptor",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:41:47.571Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:42:20.738Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T02:44:43.402Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:08:36.255Z",
+      "feature": "mapper",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:10:39.898Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:11:08.849Z",
+      "feature": "vo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:11:22.499Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:11:32.013Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:11:54.312Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:11:59.774Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:12:07.523Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:22:07.794Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:22:16.494Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:22:24.533Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:22:32.255Z",
+      "feature": "mapper",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:40:22.095Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T05:40:39.686Z",
+      "feature": "controller",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-01T06:16:37.595Z",
+      "feature": "service",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}

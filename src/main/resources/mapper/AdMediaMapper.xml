@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wontherads.mapper.AdMediaMapper">
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- 매체 (ADS_MEDIA)                       -->
+    <!-- ══════════════════════════════════════ -->
+
+    <select id="selectMediaList" resultType="AdMediaVO">
+        SELECT media_id, media_name, media_url, description, use_yn, created_at, updated_at
+          FROM ADS_MEDIA WHERE use_yn = 'Y' ORDER BY media_name
+    </select>
+
+    <select id="selectAllMediaList" resultType="AdMediaVO">
+        SELECT media_id, media_name, media_url, description, use_yn, created_at, updated_at
+          FROM ADS_MEDIA ORDER BY media_id DESC
+    </select>
+
+    <select id="selectMedia" resultType="AdMediaVO">
+        SELECT media_id, media_name, media_url, description, use_yn, created_at, updated_at
+          FROM ADS_MEDIA WHERE media_id = #{mediaId}
+    </select>
+
+    <insert id="insertMedia" useGeneratedKeys="true" keyProperty="mediaId">
+        INSERT INTO ADS_MEDIA (media_name, media_url, description, use_yn)
+        VALUES (#{mediaName}, #{mediaUrl}, #{description}, #{useYn})
+    </insert>
+
+    <update id="updateMedia">
+        UPDATE ADS_MEDIA SET
+            media_name  = #{mediaName},
+            media_url   = #{mediaUrl},
+            description = #{description},
+            use_yn      = #{useYn},
+            updated_at  = NOW()
+         WHERE media_id = #{mediaId}
+    </update>
+
+    <delete id="deleteMedia">
+        DELETE FROM ADS_MEDIA WHERE media_id = #{mediaId}
+    </delete>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- 플랫폼 (ADS_PLATFORM)                  -->
+    <!-- ══════════════════════════════════════ -->
+
+    <select id="selectAllPlatforms" resultType="AdPlatformVO">
+        SELECT platform_id, platform_code, platform_name, use_yn, created_at
+          FROM ADS_PLATFORM WHERE use_yn = 'Y' ORDER BY platform_id
+    </select>
+
+    <select id="selectAllPlatformsList" resultType="AdPlatformVO">
+        SELECT platform_id, platform_code, platform_name, use_yn, created_at
+          FROM ADS_PLATFORM ORDER BY platform_id DESC
+    </select>
+
+    <select id="selectPlatform" resultType="AdPlatformVO">
+        SELECT platform_id, platform_code, platform_name, use_yn, created_at
+          FROM ADS_PLATFORM WHERE platform_id = #{platformId}
+    </select>
+
+    <insert id="insertPlatform" useGeneratedKeys="true" keyProperty="platformId">
+        INSERT INTO ADS_PLATFORM (platform_code, platform_name, use_yn)
+        VALUES (#{platformCode}, #{platformName}, #{useYn})
+    </insert>
+
+    <update id="updatePlatform">
+        UPDATE ADS_PLATFORM SET
+            platform_code = #{platformCode},
+            platform_name = #{platformName},
+            use_yn        = #{useYn}
+         WHERE platform_id = #{platformId}
+    </update>
+
+    <delete id="deletePlatform">
+        DELETE FROM ADS_PLATFORM WHERE platform_id = #{platformId}
+    </delete>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- 매체-플랫폼 매핑 (ADS_MEDIA_PLATFORM)   -->
+    <!-- ══════════════════════════════════════ -->
+
+    <select id="selectPlatformsByMedia" resultType="AdPlatformVO">
+        SELECT p.platform_id, p.platform_code, p.platform_name, p.use_yn, p.created_at
+          FROM ADS_PLATFORM p
+         INNER JOIN ADS_MEDIA_PLATFORM mp ON mp.platform_id = p.platform_id
+         WHERE mp.media_id = #{mediaId} AND mp.use_yn = 'Y' AND p.use_yn = 'Y'
+         ORDER BY p.platform_id
+    </select>
+
+    <select id="selectMappedPlatformIds" resultType="long">
+        SELECT platform_id FROM ADS_MEDIA_PLATFORM
+         WHERE media_id = #{mediaId} AND use_yn = 'Y'
+    </select>
+
+    <delete id="deleteMediaPlatformByMedia">
+        DELETE FROM ADS_MEDIA_PLATFORM WHERE media_id = #{mediaId}
+    </delete>
+
+    <insert id="insertMediaPlatform">
+        INSERT INTO ADS_MEDIA_PLATFORM (media_id, platform_id, use_yn)
+        VALUES (#{mediaId}, #{platformId}, 'Y')
+    </insert>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- 노출위치 (ADS_PLACEMENT)                -->
+    <!-- ══════════════════════════════════════ -->
+
+    <select id="selectPlacementsByPlatform" resultType="AdPlacementVO">
+        SELECT placement_id, platform_id, placement_code, placement_name,
+               width, height, description, use_yn, created_at
+          FROM ADS_PLACEMENT WHERE platform_id = #{platformId} AND use_yn = 'Y'
+         ORDER BY placement_id
+    </select>
+
+    <select id="selectPlacementsByPlatformAll" resultType="AdPlacementVO">
+        SELECT pl.placement_id, pl.platform_id, pl.placement_code, pl.placement_name,
+               pl.width, pl.height, pl.description, pl.use_yn, pl.created_at,
+               p.platform_name
+          FROM ADS_PLACEMENT pl
+          LEFT JOIN ADS_PLATFORM p ON p.platform_id = pl.platform_id
+         WHERE pl.platform_id = #{platformId}
+         ORDER BY pl.placement_id DESC
+    </select>
+
+    <select id="selectAllPlacementsList" resultType="AdPlacementVO">
+        SELECT pl.placement_id, pl.platform_id, pl.placement_code, pl.placement_name,
+               pl.width, pl.height, pl.description, pl.use_yn, pl.created_at,
+               p.platform_name
+          FROM ADS_PLACEMENT pl
+          LEFT JOIN ADS_PLATFORM p ON p.platform_id = pl.platform_id
+         ORDER BY pl.platform_id, pl.placement_id DESC
+    </select>
+
+    <select id="selectPlacement" resultType="AdPlacementVO">
+        SELECT pl.placement_id, pl.platform_id, pl.placement_code, pl.placement_name,
+               pl.width, pl.height, pl.description, pl.use_yn, pl.created_at,
+               p.platform_name
+          FROM ADS_PLACEMENT pl
+          LEFT JOIN ADS_PLATFORM p ON p.platform_id = pl.platform_id
+         WHERE pl.placement_id = #{placementId}
+    </select>
+
+    <insert id="insertPlacement" useGeneratedKeys="true" keyProperty="placementId">
+        INSERT INTO ADS_PLACEMENT (platform_id, placement_code, placement_name, width, height, description, use_yn)
+        VALUES (#{platformId}, #{placementCode}, #{placementName}, #{width}, #{height}, #{description}, #{useYn})
+    </insert>
+
+    <update id="updatePlacement">
+        UPDATE ADS_PLACEMENT SET
+            platform_id    = #{platformId},
+            placement_code = #{placementCode},
+            placement_name = #{placementName},
+            width          = #{width},
+            height         = #{height},
+            description    = #{description},
+            use_yn         = #{useYn}
+         WHERE placement_id = #{placementId}
+    </update>
+
+    <delete id="deletePlacement">
+        DELETE FROM ADS_PLACEMENT WHERE placement_id = #{placementId}
+    </delete>
+
+</mapper>
