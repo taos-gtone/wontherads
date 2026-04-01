@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * 광고 노출 REST API
  * - 외부 앱/웹사이트에서 호출하여 배너 정보를 JSON으로 받음
- * - 인증 불필요 (공개 API)
+ * - 인증 불필요 (공개 API) 정리 완료
  */
 @RestController
 @RequestMapping("/api/banner")
