@@ -1,7 +1,10 @@
 package com.wontherads.service;
 
 import com.wontherads.mapper.AdBannerMapper;
+import com.wontherads.mapper.AdMediaMapper;
 import com.wontherads.vo.AdBannerVO;
+import com.wontherads.vo.AdPlacementVO;
+import com.wontherads.vo.AdPlatformVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,11 +25,11 @@ public class AdBannerServiceImpl implements AdBannerService {
     @Autowired
     private AdBannerMapper adBannerMapper;
 
+    @Autowired
+    private AdMediaMapper adMediaMapper;
+
     @Value("${file.upload.base-path}")
     private String basePath;
-
-    @Value("${file.upload.banner-path}")
-    private String bannerPath;
 
     @Override
     public List<AdBannerVO> getBannerList(long mediaId, long platformId, String status,
@@ -49,7 +50,7 @@ public class AdBannerServiceImpl implements AdBannerService {
 
     @Override
     public long writeBanner(AdBannerVO banner, MultipartFile imageFile) {
-        String savedPath = saveImage(imageFile);
+        String savedPath = saveImage(imageFile, banner.getPlatformId(), banner.getPlacementId());
         banner.setImagePath(savedPath);
         adBannerMapper.insertBanner(banner);
         return banner.getBannerId();
@@ -58,12 +59,11 @@ public class AdBannerServiceImpl implements AdBannerService {
     @Override
     public void editBanner(AdBannerVO banner, MultipartFile newImageFile) {
         if (newImageFile != null && !newImageFile.isEmpty()) {
-            // 기존 이미지 삭제
             AdBannerVO old = adBannerMapper.selectBanner(banner.getBannerId());
             if (old != null && old.getImagePath() != null) {
                 deleteImageFile(old.getImagePath());
             }
-            String savedPath = saveImage(newImageFile);
+            String savedPath = saveImage(newImageFile, banner.getPlatformId(), banner.getPlacementId());
             banner.setImagePath(savedPath);
         }
         adBannerMapper.updateBanner(banner);
@@ -79,7 +79,12 @@ public class AdBannerServiceImpl implements AdBannerService {
         adBannerMapper.toggleBannerStatus(bannerId);
     }
 
-    private String saveImage(MultipartFile file) {
+    /**
+     * 이미지 저장
+     * 경로: {base-path}/{platformCode}/{placementCode}/{UUID}.{ext}
+     * 예: /wontherads/tomcat/webapps/upload/WEB/WEB_TOP/xxxx.png
+     */
+    private String saveImage(MultipartFile file, long platformId, long placementId) {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("이미지 파일이 필요합니다.");
         }
@@ -97,9 +102,16 @@ public class AdBannerServiceImpl implements AdBannerService {
             throw new IllegalArgumentException("파일 크기가 5MB를 초과합니다.");
         }
 
-        String dateDir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        // 플랫폼코드, 위치코드 조회
+        AdPlatformVO platform = adMediaMapper.selectPlatform(platformId);
+        AdPlacementVO placement = adMediaMapper.selectPlacement(placementId);
+
+        String platformCode = (platform != null) ? platform.getPlatformCode() : "UNKNOWN";
+        String placementCode = (placement != null) ? placement.getPlacementCode() : "UNKNOWN";
+
+        // 경로: /{platformCode}/{placementCode}/{UUID}.{ext}
         String fileName = UUID.randomUUID() + "." + ext;
-        String relativePath = bannerPath + "/" + dateDir + "/" + fileName;
+        String relativePath = "/" + platformCode + "/" + placementCode + "/" + fileName;
         File dest = new File(basePath + relativePath);
 
         if (!dest.getParentFile().exists()) {
