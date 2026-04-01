@@ -21,4 +21,7 @@ public interface AdBannerService {
     void deleteBanner(long bannerId);
 
     void toggleBannerStatus(long bannerId);
+
+    /* 광고 노출 API용 */
+    List<AdBannerVO> getActiveBanners(String platformCode, String placementCode, long mediaId);
 }

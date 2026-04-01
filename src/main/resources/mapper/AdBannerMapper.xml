@@ -115,4 +115,33 @@
            AND deleted_yn = 'N'
     </update>
 
+    <!-- ══════════════════════════════════════ -->
+    <!-- 광고 노출 API용 (ACTIVE + 기간 내 배너) -->
+    <!-- ══════════════════════════════════════ -->
+
+    <select id="selectActiveBanners" resultType="AdBannerVO">
+        SELECT
+            b.banner_id, b.media_id, b.platform_id, b.placement_id,
+            b.title, b.image_path, b.click_url, b.alt_text,
+            b.status, b.weight, b.sort_order,
+            b.start_date, b.end_date,
+            m.media_name,
+            p.platform_name, p.platform_code,
+            pl.placement_name, pl.width AS placement_width, pl.height AS placement_height
+          FROM ADS_BANNER b
+          LEFT JOIN ADS_MEDIA m ON m.media_id = b.media_id
+          LEFT JOIN ADS_PLATFORM p ON p.platform_id = b.platform_id
+          LEFT JOIN ADS_PLACEMENT pl ON pl.placement_id = b.placement_id
+         WHERE b.deleted_yn = 'N'
+           AND b.status = 'ACTIVE'
+           AND p.platform_code = #{platformCode}
+           AND pl.placement_code = #{placementCode}
+           AND (b.start_date IS NULL OR b.start_date &lt;= NOW())
+           AND (b.end_date IS NULL OR b.end_date &gt;= NOW())
+        <if test="mediaId > 0">
+           AND b.media_id = #{mediaId}
+        </if>
+         ORDER BY b.sort_order ASC, b.weight DESC
+    </select>
+
 </mapper>

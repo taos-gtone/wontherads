@@ -79,6 +79,11 @@ public class AdBannerServiceImpl implements AdBannerService {
         adBannerMapper.toggleBannerStatus(bannerId);
     }
 
+    @Override
+    public List<AdBannerVO> getActiveBanners(String platformCode, String placementCode, long mediaId) {
+        return adBannerMapper.selectActiveBanners(platformCode, placementCode, mediaId);
+    }
+
     /**
      * 이미지 저장
      * 경로: {base-path}/{platformCode}/{placementCode}/{UUID}.{ext}

@@ -32,4 +32,11 @@ public interface AdBannerMapper {
     void deleteBanner(@Param("bannerId") long bannerId);
 
     void toggleBannerStatus(@Param("bannerId") long bannerId);
+
+    /* ── 광고 노출 API용 ── */
+
+    List<AdBannerVO> selectActiveBanners(
+            @Param("platformCode") String platformCode,
+            @Param("placementCode") String placementCode,
+            @Param("mediaId") long mediaId);
 }
