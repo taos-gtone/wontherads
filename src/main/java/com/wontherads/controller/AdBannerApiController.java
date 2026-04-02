@@ -47,7 +47,12 @@ public class AdBannerApiController {
             Map<String, Object> item = new LinkedHashMap<>();
             item.put("bannerId", b.getBannerId());
             item.put("title", b.getTitle());
-            item.put("imageUrl", baseUrl + "/upload" + b.getImagePath());
+            item.put("mediaType", b.getMediaType());
+            if (b.isVideo()) {
+                item.put("mediaUrl", baseUrl + "/upload" + b.getImagePath());
+            } else {
+                item.put("imageUrl", baseUrl + "/upload" + b.getImagePath());
+            }
             item.put("clickUrl", b.getClickUrl());
             item.put("altText", b.getAltText());
             item.put("weight", b.getWeight());
@@ -92,7 +97,12 @@ public class AdBannerApiController {
         Map<String, Object> banner = new LinkedHashMap<>();
         banner.put("bannerId", selected.getBannerId());
         banner.put("title", selected.getTitle());
-        banner.put("imageUrl", baseUrl + "/upload" + selected.getImagePath());
+        banner.put("mediaType", selected.getMediaType());
+        if (selected.isVideo()) {
+            banner.put("mediaUrl", baseUrl + "/upload" + selected.getImagePath());
+        } else {
+            banner.put("imageUrl", baseUrl + "/upload" + selected.getImagePath());
+        }
         banner.put("clickUrl", selected.getClickUrl());
         banner.put("altText", selected.getAltText());
         banner.put("weight", selected.getWeight());

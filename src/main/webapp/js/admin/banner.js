@@ -59,9 +59,9 @@ function showPlacementSize() {
   }
 }
 
-/* ═══════ 이미지 미리보기 ═══════ */
+/* ═══════ 미디어 미리보기 (이미지 + 동영상) ═══════ */
 
-function previewImage(input) {
+function previewMedia(input) {
   var preview = document.getElementById('imagePreview');
   if (!input.files || !input.files[0]) {
     preview.innerHTML = '';
@@ -69,30 +69,42 @@ function previewImage(input) {
   }
 
   var file = input.files[0];
-
-  // 파일 크기 검증 (5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    alert('파일 크기가 5MB를 초과합니다.');
-    input.value = '';
-    preview.innerHTML = '';
-    return;
-  }
+  var ext = file.name.split('.').pop().toLowerCase();
+  var isVideo = (ext === 'mp4');
+  var isImage = ['jpg','jpeg','png','gif','webp'].includes(ext);
 
   // 확장자 검증
-  var ext = file.name.split('.').pop().toLowerCase();
-  if (!['jpg','jpeg','png','gif','webp'].includes(ext)) {
-    alert('허용되지 않은 파일 형식입니다. (jpg, png, gif, webp만 가능)');
+  if (!isImage && !isVideo) {
+    alert('허용되지 않은 파일 형식입니다. (jpg, png, gif, webp, mp4만 가능)');
     input.value = '';
     preview.innerHTML = '';
     return;
   }
 
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    preview.innerHTML = '<img src="' + e.target.result + '" style="max-width:400px;max-height:200px;border:1px solid #ddd;border-radius:8px;">';
-  };
-  reader.readAsDataURL(file);
+  // 파일 크기 검증
+  var maxSize = isVideo ? 50 * 1024 * 1024 : 5 * 1024 * 1024;
+  var sizeLabel = isVideo ? '50MB' : '5MB';
+  if (file.size > maxSize) {
+    alert('파일 크기가 ' + sizeLabel + '를 초과합니다.');
+    input.value = '';
+    preview.innerHTML = '';
+    return;
+  }
+
+  if (isVideo) {
+    var videoUrl = URL.createObjectURL(file);
+    preview.innerHTML = '<video src="' + videoUrl + '" style="max-width:400px;max-height:200px;border:1px solid #ddd;border-radius:8px;" controls muted></video>';
+  } else {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      preview.innerHTML = '<img src="' + e.target.result + '" style="max-width:400px;max-height:200px;border:1px solid #ddd;border-radius:8px;">';
+    };
+    reader.readAsDataURL(file);
+  }
 }
+
+/* 하위 호환: 기존 previewImage 호출 대비 */
+function previewImage(input) { previewMedia(input); }
 
 /* ═══════ 폼 검증 ═══════ */
 

@@ -85,13 +85,13 @@ public class AdBannerServiceImpl implements AdBannerService {
     }
 
     /**
-     * 이미지 저장
+     * 미디어 파일 저장 (이미지 + 동영상)
      * 경로: {base-path}/{platformCode}/{placementCode}/{UUID}.{ext}
      * 예: /wontherads/tomcat/webapps/upload/WEB/WEB_TOP/xxxx.png
      */
     private String saveImage(MultipartFile file, long platformId, long placementId) {
         if (file == null || file.isEmpty()) {
-            throw new IllegalArgumentException("이미지 파일이 필요합니다.");
+            throw new IllegalArgumentException("파일이 필요합니다.");
         }
 
         String orgName = file.getOriginalFilename();
@@ -99,12 +99,17 @@ public class AdBannerServiceImpl implements AdBannerService {
                 ? orgName.substring(orgName.lastIndexOf(".") + 1).toLowerCase()
                 : "";
 
-        if (!ext.matches("jpg|jpeg|png|gif|webp")) {
+        boolean isVideo = "mp4".equals(ext);
+        boolean isImage = ext.matches("jpg|jpeg|png|gif|webp");
+
+        if (!isImage && !isVideo) {
             throw new IllegalArgumentException("허용되지 않은 파일 형식: " + ext);
         }
 
-        if (file.getSize() > 5 * 1024 * 1024) {
-            throw new IllegalArgumentException("파일 크기가 5MB를 초과합니다.");
+        long maxSize = isVideo ? 50L * 1024 * 1024 : 5L * 1024 * 1024;
+        String sizeLabel = isVideo ? "50MB" : "5MB";
+        if (file.getSize() > maxSize) {
+            throw new IllegalArgumentException("파일 크기가 " + sizeLabel + "를 초과합니다.");
         }
 
         // 플랫폼코드, 위치코드 조회

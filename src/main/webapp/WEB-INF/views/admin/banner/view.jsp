@@ -18,10 +18,18 @@
   <% if (banner != null) { %>
   <div class="adm-card" style="max-width:800px;">
 
-    <!-- 이미지 미리보기 -->
+    <!-- 미디어 미리보기 -->
     <div style="text-align:center;margin-bottom:24px;padding:20px;background:#f8f9fa;border-radius:8px;">
+      <% if (banner.isVideo()) { %>
+      <video src="<%= ctx %>/upload<%= banner.getImagePath() %>"
+             style="max-width:100%;max-height:400px;border-radius:4px;"
+             controls autoplay muted loop>
+        브라우저가 동영상 재생을 지원하지 않습니다.
+      </video>
+      <% } else { %>
       <img src="<%= ctx %>/upload<%= banner.getImagePath() %>" alt="<%= banner.getAltText() != null ? org.springframework.web.util.HtmlUtils.htmlEscape(banner.getAltText()) : "" %>"
            style="max-width:100%;max-height:300px;border-radius:4px;">
+      <% } %>
     </div>
 
     <table class="adm-detail-table">

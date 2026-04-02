@@ -93,16 +93,20 @@
                placeholder="이미지 대체 텍스트 (접근성)">
       </div>
 
-      <!-- 배너 이미지 -->
+      <!-- 배너 미디어 (이미지/동영상) -->
       <div class="adm-form-group">
-        <label class="adm-form-label">배너 이미지 <% if (!isEdit) { %><span class="required">*</span><% } %></label>
+        <label class="adm-form-label">배너 미디어 <% if (!isEdit) { %><span class="required">*</span><% } %></label>
         <input type="file" id="imageFile" name="<%= isEdit ? "newImageFile" : "imageFile" %>" class="adm-form-input"
-               accept="image/jpeg,image/png,image/gif,image/webp" onchange="previewImage(this)"
+               accept="image/jpeg,image/png,image/gif,image/webp,video/mp4" onchange="previewMedia(this)"
                <%= !isEdit ? "required" : "" %>>
-        <div class="adm-help-text">JPG, PNG, GIF, WEBP (최대 5MB)</div>
+        <div class="adm-help-text">이미지: JPG, PNG, GIF, WEBP (최대 5MB) | 동영상: MP4 (최대 50MB)</div>
         <div id="imagePreview" style="margin-top:10px;">
           <% if (isEdit && banner.getImagePath() != null) { %>
-          <img src="<%= ctx %>/upload<%= banner.getImagePath() %>" style="max-width:400px;max-height:200px;border:1px solid #ddd;border-radius:8px;">
+            <% if (banner.isVideo()) { %>
+            <video src="<%= ctx %>/upload<%= banner.getImagePath() %>" style="max-width:400px;max-height:200px;border:1px solid #ddd;border-radius:8px;" controls muted></video>
+            <% } else { %>
+            <img src="<%= ctx %>/upload<%= banner.getImagePath() %>" style="max-width:400px;max-height:200px;border:1px solid #ddd;border-radius:8px;">
+            <% } %>
           <% } %>
         </div>
       </div>

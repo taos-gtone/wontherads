@@ -74,6 +74,21 @@ public class AdBannerVO {
     public int getPlacementHeight() { return placementHeight; }
     public void setPlacementHeight(int placementHeight) { this.placementHeight = placementHeight; }
 
+    /**
+     * imagePath 확장자로 미디어 타입 판별
+     * @return "VIDEO" or "IMAGE"
+     */
+    public String getMediaType() {
+        if (imagePath != null && imagePath.toLowerCase().endsWith(".mp4")) {
+            return "VIDEO";
+        }
+        return "IMAGE";
+    }
+
+    public boolean isVideo() {
+        return "VIDEO".equals(getMediaType());
+    }
+
     public String getTimeAgo() {
         if (createdAt == null) return "";
         long diff = System.currentTimeMillis() - createdAt.getTime();
